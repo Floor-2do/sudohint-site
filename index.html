@@ -125,16 +125,8 @@
     .niveau-naam { font-weight: 800; color: var(--navy); flex: 1; }
     .niveau-aantal { color: var(--grijs); font-size: .95rem; }
 
-    /* Waar te koop: online (bol) naast in de winkel (foto) */
+    /* Eind-CTA */
     .koop { background: linear-gradient(180deg, var(--lucht-licht), var(--gras-licht)); text-align: center; }
-    .waar { display: grid; gap: 20px; max-width: 900px; margin: 0 auto; text-align: left; }
-    @media (min-width: 720px) { .waar { grid-template-columns: 1fr 1fr; } }
-    .waar .kaart { display: flex; flex-direction: column; }
-    .waar h3 { color: var(--navy); font-size: 1.25rem; margin-bottom: 10px; }
-    .waar .online { align-items: flex-start; justify-content: center; gap: 6px; }
-    .waar .online p { color: var(--grijs); }
-    .waar .winkel img { border-radius: 10px; }
-    .waar .winkel p { color: var(--grijs); font-size: .92rem; margin-top: 10px; }
     .koop .deel2 { margin-top: 26px; font-weight: 700; color: var(--groen-donker); }
 
     footer { text-align: center; padding: 28px 20px; color: #777; font-size: .9rem; background: #fff; }
@@ -251,22 +243,12 @@
     </div>
   </section>
 
-  <!-- ===== Waar te koop ===== -->
+  <!-- ===== Eind-CTA ===== -->
   <section class="koop">
     <h2>Klaar om te puzzelen?</h2>
-    <p class="intro">Sudohint deel 1, De Boerderij, koop je online of in de winkel.</p>
-    <div class="waar">
-      <div class="kaart online">
-        <h3>Online</h3>
-        <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
-        <p>€ 13,95 · 2 voor € 25,00 · vandaag besteld, morgen in huis</p>
-      </div>
-      <div class="kaart winkel">
-        <h3>In de winkel</h3>
-        <img src="img/winkel-maestro.jpg" alt="Sudohint in het schap bij TG Maestro, tussen de puzzelboekjes">
-        <p>Sudohint ligt in het schap bij <strong>TG Maestro</strong>. Heb je een winkel en wil je Sudohint ook verkopen? Mail naar <a href="mailto:info@sudohint.nl">info@sudohint.nl</a>.</p>
-      </div>
-    </div>
+    <p class="intro">Sudohint deel 1, De Boerderij, is verkrijgbaar op bol. Vandaag besteld, morgen in huis.</p>
+    <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
+    <p class="prijs">€ 13,95 · 2 voor € 25,00</p>
     <p class="deel2">Dit is deel 1 van de Sudohint-serie. Welke dieren help jij in deel 2?</p>
   </section>
 
