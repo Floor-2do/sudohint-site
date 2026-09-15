@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!--
+  Bestand: sudohint-site/index.html
+  Wat: één-pagina website voor sudohint.nl — stelt het boek voor en verwijst naar bol.com om te kopen.
+  Waarom: landingspagina voor social media en direct verkeer; geen webshop nodig, verkoop loopt via bol.
+  Look: volgt de cover van druk 4 (donkerblauwe titel, groene banner, lucht → gras, crème kaart).
+  Gerelateerd: img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
+               img/zo-werkt-het.jpg, img/nooit-vastzitten.jpg
+-->
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudohint — Deel 1: De Boerderij | 40 logicapuzzels met dieren</title>
+  <meta name="description" content="Sudohint: 40 logicapuzzels met dieren, van makkelijk tot zeer moeilijk. Nr. 1 in de top 10 best verkochte Quizzen &amp; Spelletjes op bol. Deel 1: De Boerderij.">
+  <!-- Open Graph: zo ziet de link eruit als je hem deelt op social media -->
+  <meta property="og:title" content="Sudohint — 40 logicapuzzels met dieren">
+  <meta property="og:description" content="Help jij alle dieren op hun plek? Puzzelen zoals sudoku, maar dan met dieren, hints en een flinke dosis speurplezier.">
+  <meta property="og:image" content="https://sudohint.nl/img/cover.jpg">
+  <link rel="icon" href="img/favicon.png" type="image/png">
+  <!-- Fredoka voor koppen (rond, zoals de titel op de cover), Nunito voor lopende tekst -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Kleuren van de cover druk 4 */
+    :root {
+      --navy: #22306B;         /* titel "Sudohint" */
+      --navy-donker: #171F4A;
+      --groen: #2F6B3B;        /* banner "Deel 1 - De Boerderij" */
+      --groen-donker: #234F2B;
+      --lucht: #8FD0F2;
+      --lucht-licht: #DCEFFB;
+      --gras: #63B348;
+      --gras-licht: #E4F3D6;
+      --creme: #F8ECD3;        /* kaart op de achterkant */
+      --geel: #F5C242;         /* sterren, zon */
+      --rood: #C8475A;
+      --blauw: #2F6DB5;
+      --paars: #5B3B8C;        /* logo-woordmerk */
+      --inkt: #1D2433;
+      --grijs: #5c6270;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', 'Trebuchet MS', sans-serif; color: var(--inkt); background: #fff; line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, .btn-bol, .banner { font-family: 'Fredoka', 'Nunito', sans-serif; }
+    .inner { max-width: 1040px; margin: 0 auto; }
+
+    /* ---------- Topbalk met logo ---------- */
+    .top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; max-width: 1040px; margin: 0 auto; }
+    .top img { height: 64px; }
+    .top a.klein { font-weight: 800; color: var(--navy); text-decoration: none; font-size: .95rem; }
+
+    /* ---------- Hero ---------- */
+    .hero { background: linear-gradient(180deg, var(--lucht) 0%, var(--lucht-licht) 75%, var(--gras-licht) 100%); padding: 28px 20px 44px; }
+    .hero .inner { display: grid; gap: 28px; align-items: center; }
+    @media (min-width: 820px) { .hero .inner { grid-template-columns: 1.1fr .9fr; gap: 40px; } }
+    .banner {
+      display: inline-block; background: var(--groen); color: #fff; font-weight: 600; letter-spacing: .04em;
+      text-transform: uppercase; padding: 6px 18px; border-radius: 8px; margin-bottom: 14px; font-size: .95rem;
+    }
+    .hero h1 { color: var(--navy); font-size: clamp(1.9rem, 5vw, 2.9rem); font-weight: 700; line-height: 1.12; margin-bottom: 12px; }
+    .hero p.sub { font-size: 1.1rem; color: #2b3244; max-width: 32em; margin-bottom: 18px; }
+    .usps { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .usps li { background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: .92rem; color: var(--navy); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .cover { width: min(360px, 88%); margin: 0 auto; border-radius: 10px; box-shadow: 0 18px 40px rgba(20,30,70,.28); transform: rotate(-2deg); }
+    .bewijs-klein { margin-top: 12px; font-weight: 700; color: var(--groen-donker); font-size: .95rem; }
+    .bewijs-klein .ster { color: var(--geel); letter-spacing: 1px; }
+
+    /* ---------- Koopknop ---------- */
+    .btn-bol {
+      display: inline-block; background: var(--navy); color: #fff; font-size: 1.15rem; font-weight: 600;
+      text-decoration: none; padding: 14px 32px; border-radius: 999px; box-shadow: 0 6px 16px rgba(34,48,107,.35);
+      transition: transform .12s, background .12s;
+    }
+    .btn-bol:hover { background: var(--navy-donker); transform: translateY(-2px); }
+    .prijs { margin-top: 8px; color: var(--grijs); font-size: .95rem; }
+
+    /* ---------- Secties ---------- */
+    section { padding: 56px 20px; }
+    h2 { color: var(--navy); font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; text-align: center; margin-bottom: 8px; }
+    p.intro { text-align: center; color: var(--grijs); max-width: 38em; margin: 0 auto 32px; }
+    .twee-kolom { display: grid; gap: 34px; align-items: center; }
+    @media (min-width: 760px) { .twee-kolom { grid-template-columns: 1fr 1fr; } }
+    .kaartfoto { border-radius: 14px; box-shadow: 0 8px 22px rgba(0,0,0,.14); }
+
+    /* Populair op bol: drie cijfer-tegels + de top-10-screenshot */
+    .populair { background: var(--gras-licht); }
+    .cijfers { display: grid; gap: 16px; margin-bottom: 20px; }
+    @media (min-width: 640px) { .cijfers { grid-template-columns: repeat(3, 1fr); } }
+    .tegel { background: #fff; border-radius: 16px; padding: 20px 18px; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+    .tegel .groot { font-family: 'Fredoka', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+    .tegel .groot.geel { color: var(--geel); letter-spacing: 2px; }
+    .tegel p { color: var(--grijs); font-size: .95rem; margin-top: 6px; }
+    .kaart { background: #fff; border-radius: 16px; padding: 22px; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+    .kaart h3 { color: var(--navy); font-size: 1.2rem; margin-bottom: 10px; }
+    .kaart img { border-radius: 8px; border: 1px solid #e6e6e6; margin-top: 8px; }
+    .kaart .stand { color: var(--grijs); font-size: .85rem; margin-top: 10px; }
+    .kaart .stand a { color: var(--navy); font-weight: 700; }
+
+    /* Wat is Sudohint: crème kaart zoals de achterkant */
+    .achterkant { background: var(--creme); border-radius: 20px; padding: 30px 26px; max-width: 760px; margin: 0 auto; }
+    .achterkant p { margin-bottom: 14px; }
+    .punten { list-style: none; display: grid; gap: 12px; margin-top: 8px; }
+    .punten li { display: flex; gap: 12px; align-items: center; font-weight: 600; }
+    .punten .ico { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; color: #fff; }
+    .ico.rood { background: var(--rood); } .ico.blauw { background: var(--blauw); } .ico.geel { background: var(--geel); }
+    .ico.groen { background: var(--groen); } .ico.paars { background: var(--paars); }
+    .punten .ster { color: var(--geel); }
+
+    /* Stappen "zo werkt het" */
+    .stappen { list-style: none; display: grid; gap: 16px; }
+    .stappen li { display: flex; gap: 14px; align-items: flex-start; }
+    .stappen .nr { flex: none; width: 38px; height: 38px; background: var(--groen); color: #fff; border-radius: 50%; display: grid; place-items: center; font-weight: 800; }
+    .stappen strong { display: block; color: var(--navy); }
+
+    /* Niveaus */
+    .niveaus { background: var(--lucht-licht); }
+    .niveau-lijst { list-style: none; max-width: 560px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 10px 26px; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+    .niveau-lijst li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid #eee; }
+    .niveau-lijst li:last-child { border-bottom: none; }
+    .sterren { color: var(--geel); letter-spacing: 2px; font-size: 1.05rem; flex: none; }
+    .niveau-naam { font-weight: 800; color: var(--navy); flex: 1; }
+    .niveau-aantal { color: var(--grijs); font-size: .95rem; }
+
+    /* Waar te koop: online (bol) naast in de winkel (foto) */
+    .koop { background: linear-gradient(180deg, var(--lucht-licht), var(--gras-licht)); text-align: center; }
+    .waar { display: grid; gap: 20px; max-width: 900px; margin: 0 auto; text-align: left; }
+    @media (min-width: 720px) { .waar { grid-template-columns: 1fr 1fr; } }
+    .waar .kaart { display: flex; flex-direction: column; }
+    .waar h3 { color: var(--navy); font-size: 1.25rem; margin-bottom: 10px; }
+    .waar .online { align-items: flex-start; justify-content: center; gap: 6px; }
+    .waar .online p { color: var(--grijs); }
+    .waar .winkel img { border-radius: 10px; }
+    .waar .winkel p { color: var(--grijs); font-size: .92rem; margin-top: 10px; }
+    .koop .deel2 { margin-top: 26px; font-weight: 700; color: var(--groen-donker); }
+
+    footer { text-align: center; padding: 28px 20px; color: #777; font-size: .9rem; background: #fff; }
+    footer img { height: 44px; margin: 0 auto 10px; }
+    footer a { color: inherit; }
+  </style>
+
+  <!--
+    META PIXEL: wil je later retargeting vanuit Instagram-ads?
+    Plak dan hier de pixel-basiscode uit Meta Events Manager.
+    Zonder pixel werkt de site ook gewoon.
+  -->
+</head>
+<body>
+
+  <!-- ===== Topbalk: logo ===== -->
+  <div class="top">
+    <img src="img/logo.png" alt="Sudohint logo">
+    <a class="klein bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com →</a>
+  </div>
+
+  <!-- ===== Hero: wat is het + koopknop ===== -->
+  <header class="hero">
+    <div class="inner">
+      <div>
+        <div class="banner">Deel 1 · De Boerderij</div>
+        <h1>Help jij alle dieren op hun plek?</h1>
+        <p class="sub">De dieren van de boerderij lopen kriskras door elkaar! Gelukkig krijg je bij elke puzzel hints: "Vera staat naast de schuur" en "Hugo zit op het gras." Denk slim na, streep weg en zet elk dier in het juiste vakje.</p>
+        <ul class="usps">
+          <li>🧩 40 logicapuzzels</li>
+          <li>⭐ van makkelijk tot zeer moeilijk</li>
+          <li>👨‍👩‍👧 voor iedereen van 9 tot 99</li>
+        </ul>
+        <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
+        <p class="prijs">€ 13,95 · 2 voor € 25,00 · morgen in huis</p>
+        <p class="bewijs-klein"><span class="ster">★★★★★</span> Alleen maar 5-sterrenreviews op bol · Nr. 1 best verkochte Quizzen &amp; Spelletjes · 1.000+ verkocht</p>
+      </div>
+      <img class="cover" src="img/cover.jpg" alt="Cover van Sudohint deel 1: De Boerderij">
+    </div>
+  </header>
+
+  <!-- ===== Populair op bol ===== -->
+  <section class="populair">
+    <div class="inner">
+      <h2>Populair op bol</h2>
+      <p class="intro">Sinds de lancering in de zomer van 2026 is Sudohint een van de best verkochte puzzelboeken van bol.</p>
+      <div class="cijfers">
+        <div class="tegel"><div class="groot">1.000+</div><p>verkocht sinds de lancering in de zomer van 2026</p></div>
+        <div class="tegel"><div class="groot">Nr. 1</div><p>in de Top 10 best verkochte Quizzen &amp; Spelletjes op bol</p></div>
+        <div class="tegel"><div class="groot geel">★★★★★</div><p>alleen maar 5-sterrenreviews op bol</p></div>
+      </div>
+      <div class="kaart">
+        <h3>Top 10 best verkochte Quizzen &amp; Spelletjes</h3>
+        <img src="img/bol-top10.png" alt="Bol top 10 best verkochte Quizzen &amp; Spelletjes met Sudohint op nummer 1">
+        <p class="stand">Stand op bol, september 2026 · <a class="bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Lees de reviews op bol →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Wat is Sudohint (tekst van de achterkant) ===== -->
+  <section>
+    <div class="inner">
+      <h2>Puzzelen zoals sudoku, maar dan met dieren</h2>
+      <p class="intro">Sudohint is puzzelen zoals sudoku, maar dan met dieren, hints en een flinke dosis speurplezier.</p>
+      <div class="achterkant">
+        <ul class="punten">
+          <li><span class="ico rood">🧠</span><span>Traint logisch denken, focus en concentratie, lekker schermvrij</span></li>
+          <li><span class="ico blauw">🧩</span><span>40 puzzels, van <span class="ster">★</span> makkelijk tot <span class="ster">★★★★★</span> zeer moeilijk</span></li>
+          <li><span class="ico geel">👥</span><span>Voor iedereen van 9 tot 99, leuk alleen én samen</span></li>
+          <li><span class="ico groen">✔</span><span>Elke puzzel kan maar op één manier opgelost worden</span></li>
+          <li><span class="ico paars">📖</span><span>Loop je vast? Achterin staat elke puzzel stap voor stap uitgelegd</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Zo werkt het ===== -->
+  <section class="niveaus">
+    <div class="inner">
+      <h2>Zo werkt het</h2>
+      <p class="intro">Elke puzzel is een plattegrond van de boerderij. De hints vertellen je nooit rechtstreeks het antwoord, samen verraden ze alles.</p>
+      <div class="twee-kolom">
+        <ol class="stappen">
+          <li><span class="nr">1</span><span><strong>Lees de hints</strong> Elk dier heeft een eigen aanwijzing: "Koos zit in de stal, maar niet op modder."</span></li>
+          <li><span class="nr">2</span><span><strong>Wie staat waar?</strong> Combineer de hints en streep vakjes weg, tot elk dier op z'n plek valt.</span></li>
+          <li><span class="nr">3</span><span><strong>Hier wél, hier niet</strong> Dieren staan op gras, modder of zand, nooit op een boom, bloemen of de tractor.</span></li>
+        </ol>
+        <img class="kaartfoto" src="img/zo-werkt-het.jpg" alt="Voorbeeldpuzzel: lees de hints en ontdek wie waar staat">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Niveaus ===== -->
+  <section>
+    <div class="inner">
+      <h2>40 puzzels in 5 niveaus</h2>
+      <p class="intro">Het boek loopt langzaam op, zodat iedereen meepuzzelt. De laatste puzzels zijn ook voor doorgewinterde puzzelaars een flinke kluif.</p>
+      <ul class="niveau-lijst">
+        <li><span class="sterren">★☆☆☆☆</span><span class="niveau-naam">Warmdraaien</span><span class="niveau-aantal">4 puzzels</span></li>
+        <li><span class="sterren">★★☆☆☆</span><span class="niveau-naam">Even puzzelen</span><span class="niveau-aantal">7 puzzels</span></li>
+        <li><span class="sterren">★★★☆☆</span><span class="niveau-naam">Stevige kluif</span><span class="niveau-aantal">16 puzzels</span></li>
+        <li><span class="sterren">★★★★☆</span><span class="niveau-naam">Voor speurneuzen</span><span class="niveau-aantal">9 puzzels</span></li>
+        <li><span class="sterren">★★★★★</span><span class="niveau-naam">De meesterproef</span><span class="niveau-aantal">4 puzzels</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Nooit vastzitten ===== -->
+  <section class="niveaus">
+    <div class="inner">
+      <h2>Nooit vastzitten</h2>
+      <p class="intro">Kom je er even niet uit? Achterin staat elke puzzel stap voor stap uitgelegd, zodat je altijd verder kunt.</p>
+      <img class="kaartfoto" src="img/nooit-vastzitten.jpg" alt="Oplossingen die stap voor stap uitleggen hoe je eruit komt" style="max-width:760px;margin:0 auto;">
+    </div>
+  </section>
+
+  <!-- ===== Waar te koop ===== -->
+  <section class="koop">
+    <h2>Klaar om te puzzelen?</h2>
+    <p class="intro">Sudohint deel 1, De Boerderij, koop je online of in de winkel.</p>
+    <div class="waar">
+      <div class="kaart online">
+        <h3>Online</h3>
+        <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
+        <p>€ 13,95 · 2 voor € 25,00 · vandaag besteld, morgen in huis</p>
+      </div>
+      <div class="kaart winkel">
+        <h3>In de winkel</h3>
+        <img src="img/winkel-maestro.jpg" alt="Sudohint in het schap bij TG Maestro, tussen de puzzelboekjes">
+        <p>Sudohint ligt in het schap bij <strong>TG Maestro</strong>. Heb je een winkel en wil je Sudohint ook verkopen? Mail naar <a href="mailto:info@sudohint.nl">info@sudohint.nl</a>.</p>
+      </div>
+    </div>
+    <p class="deel2">Dit is deel 1 van de Sudohint-serie. Welke dieren help jij in deel 2?</p>
+  </section>
+
+  <footer>
+    <img src="img/logo.png" alt="Sudohint">
+    Sudohint is een uitgave van 2DOBOARD B.V. · <a href="mailto:info@sudohint.nl">info@sudohint.nl</a>
+  </footer>
+
+  <script>
+    // Eén plek voor de bol-link: vul hieronder de URL van je productpagina in.
+    // Alle koopknoppen (topbalk, hero en onderaan) pakken hem automatisch op.
+    const BOL_URL = "https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/";
+    document.querySelectorAll(".bol-link").forEach(a => { a.href = BOL_URL; });
+  </script>
+
+</body>
+</html>
