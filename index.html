@@ -4,7 +4,7 @@
   Wat: één-pagina website voor sudohint.nl — stelt het boek voor en verwijst naar bol.com om te kopen.
   Waarom: landingspagina voor social media en direct verkeer; geen webshop nodig, verkoop loopt via bol.
   Look: volgt de cover van druk 4 (donkerblauwe titel, groene banner, lucht → gras, crème kaart).
-  Gerelateerd: img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
+  Gerelateerd: img/lifestyle.jpg (hero, Canva-foto druk 4), img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
                img/zo-werkt-het.jpg, img/nooit-vastzitten.jpg
 -->
 <html lang="nl">
@@ -16,7 +16,7 @@
   <!-- Open Graph: zo ziet de link eruit als je hem deelt op social media -->
   <meta property="og:title" content="Sudohint — 40 logicapuzzels met dieren">
   <meta property="og:description" content="Help jij alle dieren op hun plek? Puzzelen zoals sudoku, maar dan met dieren, hints en een flinke dosis speurplezier.">
-  <meta property="og:image" content="https://sudohint.nl/img/cover.jpg">
+  <meta property="og:image" content="https://sudohint.nl/img/lifestyle.jpg">
   <link rel="icon" href="img/favicon.png" type="image/png">
   <!-- Fredoka voor koppen (rond, zoals de titel op de cover), Nunito voor lopende tekst -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,6 +66,7 @@
     .usps { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
     .usps li { background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: .92rem; color: var(--navy); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
     .cover { width: min(360px, 88%); margin: 0 auto; border-radius: 10px; box-shadow: 0 18px 40px rgba(20,30,70,.28); transform: rotate(-2deg); }
+    .cover.foto { width: min(440px, 100%); transform: none; border-radius: 16px; box-shadow: 0 12px 30px rgba(20,30,70,.18); }
     .bewijs-klein { margin-top: 12px; font-weight: 700; color: var(--groen-donker); font-size: .95rem; }
     .bewijs-klein .ster { color: var(--geel); letter-spacing: 1px; }
 
@@ -164,7 +165,7 @@
         <p class="prijs">€ 13,95 · 2 voor € 25,00 · morgen in huis</p>
         <p class="bewijs-klein"><span class="ster">★★★★★</span> Alleen maar 5-sterrenreviews op bol · Nr. 1 best verkochte Quizzen &amp; Spelletjes · 1.000+ verkocht</p>
       </div>
-      <img class="cover" src="img/cover.jpg" alt="Cover van Sudohint deel 1: De Boerderij">
+      <img class="cover foto" src="img/lifestyle.jpg" alt="Sudohint deel 1, De Boerderij, op tafel met een kop koffie">
     </div>
   </header>
 
