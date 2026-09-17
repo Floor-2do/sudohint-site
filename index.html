@@ -146,7 +146,7 @@
   <!-- ===== Topbalk: logo ===== -->
   <div class="top">
     <img src="img/logo.png" alt="Sudohint logo">
-    <a class="klein bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com →</a>
+    <a class="klein bol-link" data-knop="topbalk" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com →</a>
   </div>
 
   <!-- ===== Hero: wat is het + koopknop ===== -->
@@ -161,7 +161,7 @@
           <li>⭐ van makkelijk tot zeer moeilijk</li>
           <li>👨‍👩‍👧 voor iedereen van 9 tot 99</li>
         </ul>
-        <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
+        <a class="btn-bol bol-link" data-knop="hero" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
         <p class="prijs">€ 13,95 · 2 voor € 25,00 · morgen in huis</p>
         <p class="bewijs-klein"><span class="ster">★★★★★</span> Alleen maar 5-sterrenreviews op bol · Nr. 1 best verkochte Quizzen &amp; Spelletjes · 1.000+ verkocht</p>
       </div>
@@ -182,7 +182,7 @@
       <div class="kaart">
         <h3>Top 10 best verkochte Quizzen &amp; Spelletjes</h3>
         <img src="img/bol-top10.png" alt="Bol top 10 best verkochte Quizzen &amp; Spelletjes met Sudohint op nummer 1">
-        <p class="stand">Stand op bol, september 2026 · <a class="bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Lees de reviews op bol →</a></p>
+        <p class="stand">Stand op bol, september 2026 · <a class="bol-link" data-knop="reviews" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Lees de reviews op bol →</a></p>
       </div>
     </div>
   </section>
@@ -248,7 +248,7 @@
   <section class="koop">
     <h2>Klaar om te puzzelen?</h2>
     <p class="intro">Sudohint deel 1, De Boerderij, is verkrijgbaar op bol. Vandaag besteld, morgen in huis.</p>
-    <a class="btn-bol bol-link" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
+    <a class="btn-bol bol-link" data-knop="eind" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
     <p class="prijs">€ 13,95 · 2 voor € 25,00</p>
     <p class="deel2">Dit is deel 1 van de Sudohint-serie. Welke dieren help jij in deel 2?</p>
   </section>
@@ -263,6 +263,51 @@
     // Alle koopknoppen (topbalk, hero en onderaan) pakken hem automatisch op.
     const BOL_URL = "https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/";
     document.querySelectorAll(".bol-link").forEach(a => { a.href = BOL_URL; });
+
+    // ── Meting: bezoek + bol-klik naar het eigen dashboard ──
+    // Geen cookies. Per browsersessie een willekeurig id, zodat het dashboard
+    // "unieke bezoeken" ongeveer kan tellen. Bron = utm_source uit de link,
+    // anders de site waar de bezoeker vandaan kwam, anders "direct".
+    const MEET_URL = "https://zealous-stingray-306.eu-west-1.convex.site/api/site-event";
+    const params = new URLSearchParams(location.search);
+    let sessie = null;
+    try {
+      sessie = sessionStorage.getItem("sh_sessie");
+      if (!sessie) {
+        sessie = Math.random().toString(36).slice(2, 12);
+        sessionStorage.setItem("sh_sessie", sessie);
+      }
+    } catch (e) { /* privémodus: dan zonder sessie-id */ }
+
+    function bron() {
+      const utm = params.get("utm_source");
+      if (utm) return utm;
+      try {
+        const host = new URL(document.referrer).hostname.replace(/^www\./, "");
+        if (host && host !== location.hostname.replace(/^www\./, "")) return host;
+      } catch (e) { /* geen of ongeldige referrer */ }
+      return "direct";
+    }
+
+    function stuur(type, extra) {
+      const data = JSON.stringify(Object.assign({
+        type,
+        session: sessie || undefined,
+        source: bron(),
+        medium: params.get("utm_medium") || undefined,
+        campaign: params.get("utm_campaign") || undefined,
+        referrer: document.referrer || undefined,
+        path: location.pathname,
+      }, extra));
+      // sendBeacon = klein, snel en werkt ook als de pagina meteen wegklikt.
+      if (navigator.sendBeacon) navigator.sendBeacon(MEET_URL, data);
+      else fetch(MEET_URL, { method: "POST", body: data, keepalive: true }).catch(() => {});
+    }
+
+    stuur("view");
+    document.querySelectorAll(".bol-link").forEach(a => {
+      a.addEventListener("click", () => stuur("bol_click", { button: a.dataset.knop || "onbekend" }));
+    });
   </script>
 
 </body>
