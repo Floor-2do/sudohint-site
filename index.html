@@ -3,7 +3,7 @@
   Bestand: sudohint-site/index.html
   Wat: één-pagina website voor sudohint.nl — stelt het boek voor en verwijst naar bol.com om te kopen.
   Waarom: landingspagina voor social media en direct verkeer; geen webshop nodig, verkoop loopt via bol.
-  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (page_viewed + bol_click, zonder cookiebanner — keuze Floor 18 sep 2026).
+  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (page_viewed + bol_clicks, zonder cookiebanner — keuze Floor 18 sep 2026).
   Look: volgt de cover van druk 4 (donkerblauwe titel, groene banner, lucht → gras, crème kaart).
   Gerelateerd: img/lifestyle.jpg (hero, Canva-foto druk 4), img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
                img/zo-werkt-het.jpg, img/nooit-vastzitten.jpg
@@ -311,13 +311,13 @@
     stuur("view");
 
     // ── ChatGPT-meetpixel: page_viewed bij laden (doet de pixel niet vanzelf),
-    //    custom event "bol_click" bij elke bol-knop = de conversie waar ChatGPT op richt.
+    //    custom event "bol_clicks" bij elke bol-knop = de conversie waar ChatGPT op richt.
     oaiq("measure", "page_viewed", { type: "contents" });
 
     document.querySelectorAll(".bol-link").forEach(a => {
       a.addEventListener("click", () => {
         stuur("bol_click", { button: a.dataset.knop || "onbekend" });
-        oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_click" });
+        oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_clicks" });
       });
     });
   </script>
