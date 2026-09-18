@@ -314,10 +314,23 @@
     //    custom event "bol_clicks" bij elke bol-knop = de conversie waar ChatGPT op richt.
     oaiq("measure", "page_viewed", { type: "contents" });
 
+    // Cookie-waarde lezen (voor __obref: de koppeling die de pixel zelf zet).
+    function cookie(naam) {
+      const m = document.cookie.match(new RegExp("(?:^|; )" + naam + "=([^;]*)"));
+      return m ? decodeURIComponent(m[1]) : undefined;
+    }
+
     document.querySelectorAll(".bol-link").forEach(a => {
       a.addEventListener("click", () => {
-        stuur("bol_click", { button: a.dataset.knop || "onbekend" });
-        oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_clicks" });
+        // Eén event-id voor pixel én backend: OpenAI telt de klik dan één keer.
+        const eventId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+        stuur("bol_click", {
+          button: a.dataset.knop || "onbekend",
+          event_id: eventId,
+          obref: cookie("__obref"),
+          url: location.href,
+        });
+        oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_clicks", event_id: eventId });
       });
     });
   </script>
