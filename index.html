@@ -3,7 +3,7 @@
   Bestand: sudohint-site/index.html
   Wat: één-pagina website voor sudohint.nl — stelt het boek voor en verwijst naar bol.com om te kopen.
   Waarom: landingspagina voor social media en direct verkeer; geen webshop nodig, verkoop loopt via bol.
-  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (alleen na akkoord via cookiebanner).
+  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (page_viewed + bol_click, zonder cookiebanner — keuze Floor 18 sep 2026).
   Look: volgt de cover van druk 4 (donkerblauwe titel, groene banner, lucht → gras, crème kaart).
   Gerelateerd: img/lifestyle.jpg (hero, Canva-foto druk 4), img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
                img/zo-werkt-het.jpg, img/nooit-vastzitten.jpg
@@ -20,9 +20,8 @@
   <meta property="og:image" content="https://sudohint.nl/img/lifestyle.jpg">
   <link rel="icon" href="img/favicon.png" type="image/png">
   <!-- OpenAI/ChatGPT-meetpixel (Ads Manager, Pixel ID K53Qk4K5fRbRPNFPxZvSjP).
-       Laadt de SDK, maar start pas na toestemming via de cookiebanner onderaan
-       (oaiq("consent", true) in het script onderaan de pagina). -->
-  <script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("consent",false);oaiq("init",{pixelId:"K53Qk4K5fRbRPNFPxZvSjP",debug:true});</script>
+       Events (page_viewed, bol_click) worden gestuurd in het script onderaan de pagina. -->
+  <script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"K53Qk4K5fRbRPNFPxZvSjP",debug:true});</script>
   <!-- Fredoka voor koppen (rond, zoals de titel op de cover), Nunito voor lopende tekst -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -83,22 +82,6 @@
     }
     .btn-bol:hover { background: var(--navy-donker); transform: translateY(-2px); }
     .prijs { margin-top: 8px; color: var(--grijs); font-size: .95rem; }
-
-    /* ---------- Cookiebanner (alleen voor de ChatGPT-meetpixel) ---------- */
-    .cookie {
-      position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 50;
-      max-width: 560px; margin: 0 auto; padding: 14px 18px;
-      background: var(--creme); color: var(--navy); border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(23,31,74,.25); font-size: .92rem; line-height: 1.4;
-      display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: space-between;
-    }
-    .cookie[hidden] { display: none; }
-    .cookie p { margin: 0; flex: 1 1 260px; }
-    .cookie button {
-      font: inherit; font-weight: 600; border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer;
-    }
-    .cookie .ja { background: var(--navy); color: #fff; }
-    .cookie .nee { background: transparent; color: var(--navy); text-decoration: underline; }
 
     /* ---------- Secties ---------- */
     section { padding: 56px 20px; }
@@ -279,15 +262,6 @@
     Sudohint is een uitgave van 2DOBOARD B.V. · <a href="mailto:info@sudohint.nl">info@sudohint.nl</a>
   </footer>
 
-  <!-- Cookiebanner: verschijnt tot de bezoeker kiest; keuze wordt onthouden -->
-  <div class="cookie" id="cookie" hidden>
-    <p>Wij gebruiken een meetpixel van OpenAI om te zien welke bezoekers uit ChatGPT doorklikken naar bol. Vind je dat goed?</p>
-    <span>
-      <button class="ja" id="cookie-ja">Akkoord</button>
-      <button class="nee" id="cookie-nee">Liever niet</button>
-    </span>
-  </div>
-
   <script>
     // Eén plek voor de bol-link: vul hieronder de URL van je productpagina in.
     // Alle koopknoppen (topbalk, hero en onderaan) pakken hem automatisch op.
@@ -336,38 +310,14 @@
 
     stuur("view");
 
-    // ── ChatGPT-meetpixel: pas actief na "Akkoord" ──
-    // De keuze staat in localStorage ("ja"/"nee"), dus de banner komt maar één keer.
-    // Na akkoord: pixel aanzetten + page_viewed sturen (doet de pixel niet vanzelf).
-    // Bij een bol-klik: custom event "bol_click" = de conversie waar ChatGPT op richt.
-    const PIXEL_BANNER = true; // false = geen banner, pixel direct aan (juridisch niet netjes in NL)
-    let pixelAan = false;
-    function pixelStart() {
-      if (pixelAan || !window.oaiq) return;
-      pixelAan = true;
-      oaiq("consent", true);
-      oaiq("measure", "page_viewed", { type: "contents" });
-    }
-    let keuze = null;
-    try { keuze = localStorage.getItem("sh_pixel"); } catch (e) { /* privémodus */ }
-    if (!PIXEL_BANNER || keuze === "ja") {
-      pixelStart();
-    } else if (keuze !== "nee") {
-      const banner = document.getElementById("cookie");
-      banner.hidden = false;
-      function kies(waarde) {
-        try { localStorage.setItem("sh_pixel", waarde); } catch (e) { /* dan vraagt hij volgende keer opnieuw */ }
-        banner.hidden = true;
-        if (waarde === "ja") pixelStart();
-      }
-      document.getElementById("cookie-ja").addEventListener("click", () => kies("ja"));
-      document.getElementById("cookie-nee").addEventListener("click", () => kies("nee"));
-    }
+    // ── ChatGPT-meetpixel: page_viewed bij laden (doet de pixel niet vanzelf),
+    //    custom event "bol_click" bij elke bol-knop = de conversie waar ChatGPT op richt.
+    oaiq("measure", "page_viewed", { type: "contents" });
 
     document.querySelectorAll(".bol-link").forEach(a => {
       a.addEventListener("click", () => {
         stuur("bol_click", { button: a.dataset.knop || "onbekend" });
-        if (pixelAan) oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_click" });
+        oaiq("measure", "custom", { type: "custom" }, { custom_event_name: "bol_click" });
       });
     });
   </script>
