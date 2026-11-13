@@ -44,6 +44,8 @@
       --rood: #C8475A;
       --blauw: #2F6DB5;
       --paars: #5B3B8C;        /* logo-woordmerk */
+      --zand: #FFCD7B;         /* lucht op de cover van deel 2 */
+      --zand-licht: #FFF4E6;
       --inkt: #1D2433;
       --grijs: #5c6270;
     }
@@ -137,9 +139,10 @@
     .koop .deel2 { margin-top: 26px; font-weight: 700; color: var(--groen-donker); }
 
     /* ---------- Deel 2: meldingsbalk + aanmeldblok (kleuren van de deel 2-cover) ---------- */
-    .melding { display: block; background: var(--groen); color: #fff; text-align: center; font-weight: 800; padding: 10px 16px; text-decoration: none; font-size: .98rem; }
-    .melding span { text-decoration: underline; white-space: nowrap; }
-    .deel2-blok { background: linear-gradient(180deg, #FFCD7B 0%, #FFF4E6 55%, #FFF4E6 100%); }
+    .melding { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; background: var(--zand); color: var(--navy); border-bottom: 3px solid var(--navy); text-align: center; font-family: 'Fredoka', 'Nunito', sans-serif; font-weight: 600; padding: 12px 16px; text-decoration: none; font-size: 1.12rem; }
+    .melding span { background: var(--navy); color: #fff; border-radius: 999px; padding: 5px 16px; font-size: .98rem; white-space: nowrap; }   /* ziet eruit als knop */
+    .melding:hover span { background: var(--navy-donker); }
+    .deel2-blok { background: linear-gradient(180deg, var(--zand) 0%, var(--zand-licht) 55%, var(--zand-licht) 100%); }
     .deel2-blok .inner { display: grid; gap: 30px; align-items: center; }
     @media (min-width: 760px) { .deel2-blok .inner { grid-template-columns: .8fr 1.2fr; gap: 44px; } }
     .deel2-blok .cover { width: min(300px, 78%); transform: rotate(-2deg); }
@@ -193,7 +196,7 @@
           <li>👨‍👩‍👧 voor iedereen van 9 tot 99</li>
         </ul>
         <a class="btn-bol bol-link" data-knop="hero" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
-        <p class="prijs">€ 13,95 · 2 voor € 25,00 · morgen in huis</p>
+        <p class="prijs">€ 14,94 · 2 voor € 25,00 · morgen in huis</p>
         <p class="bewijs-klein"><span class="ster">★★★★★</span> Alleen maar 5-sterrenreviews op bol · Nr. 1 best verkochte Quizzen &amp; Spelletjes · 1.000+ verkocht</p>
       </div>
       <img class="cover foto" src="img/lifestyle.jpg" alt="Sudohint deel 1, De Boerderij, op tafel met een kop koffie">
@@ -300,7 +303,7 @@
     <h2>Klaar om te puzzelen?</h2>
     <p class="intro">Sudohint deel 1, De Boerderij, is verkrijgbaar op bol. Vandaag besteld, morgen in huis.</p>
     <a class="btn-bol bol-link" data-knop="eind" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
-    <p class="prijs">€ 13,95 · 2 voor € 25,00</p>
+    <p class="prijs">€ 14,94 · 2 voor € 25,00</p>
     <p class="deel2">Dit is deel 1 van de Sudohint-serie. Deel 2, De Dierentuin, komt eraan: <a href="#deel2">krijg een seintje</a>.</p>
   </section>
 
