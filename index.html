@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <!--
   Bestand: sudohint-site/index.html
-  Wat: één-pagina website voor sudohint.nl — stelt het boek voor en verwijst naar bol.com om te kopen.
+  Wat: één-pagina website voor sudohint.nl: stelt het boek voor en verwijst naar bol.com om te kopen.
   Waarom: landingspagina voor social media en direct verkeer; geen webshop nodig, verkoop loopt via bol.
-  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (page_viewed + bol_clicks, zonder cookiebanner — keuze Floor 18 sep 2026).
+  Meting: eigen beacon naar het dashboard (cookievrij) + OpenAI/ChatGPT-meetpixel (page_viewed + bol_clicks, zonder cookiebanner, keuze Floor 18 sep 2026).
   Look: volgt de cover van druk 4 (donkerblauwe titel, groene banner, lucht → gras, crème kaart).
-  Gerelateerd: img/lifestyle.jpg (hero, Canva-foto druk 4), img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
+  Deel 2 (13 nov 2026): meldingsbalk bovenaan + blok "Binnenkort: deel 2" met aanmeldformulier.
+           Het formulier stuurt het e-mailadres naar het dashboard (POST /api/site-signup).
+  Gerelateerd: img/cover-deel2.jpg (voorkant deel 2), img/lifestyle.jpg (hero, Canva-foto druk 4), img/cover.jpg (voorkant druk 4), img/logo.png, img/bol-top10.png (bewijs),
                img/zo-werkt-het.jpg, img/nooit-vastzitten.jpg
 -->
 <html lang="nl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sudohint — Deel 1: De Boerderij | 40 logicapuzzels met dieren</title>
+  <title>Sudohint, Deel 1: De Boerderij | 40 logicapuzzels met dieren</title>
   <meta name="description" content="Sudohint: 40 logicapuzzels met dieren, van makkelijk tot zeer moeilijk. Nr. 1 in de top 10 best verkochte Quizzen &amp; Spelletjes op bol. Deel 1: De Boerderij.">
   <!-- Open Graph: zo ziet de link eruit als je hem deelt op social media -->
-  <meta property="og:title" content="Sudohint — 40 logicapuzzels met dieren">
+  <meta property="og:title" content="Sudohint: 40 logicapuzzels met dieren">
   <meta property="og:description" content="Help jij alle dieren op hun plek? Puzzelen zoals sudoku, maar dan met dieren, hints en een flinke dosis speurplezier.">
   <meta property="og:image" content="https://sudohint.nl/img/lifestyle.jpg">
   <link rel="icon" href="img/favicon.png" type="image/png">
@@ -134,6 +136,28 @@
     .koop { background: linear-gradient(180deg, var(--lucht-licht), var(--gras-licht)); text-align: center; }
     .koop .deel2 { margin-top: 26px; font-weight: 700; color: var(--groen-donker); }
 
+    /* ---------- Deel 2: meldingsbalk + aanmeldblok (kleuren van de deel 2-cover) ---------- */
+    .melding { display: block; background: var(--groen); color: #fff; text-align: center; font-weight: 800; padding: 10px 16px; text-decoration: none; font-size: .98rem; }
+    .melding span { text-decoration: underline; white-space: nowrap; }
+    .deel2-blok { background: linear-gradient(180deg, #FFCD7B 0%, #FFF4E6 55%, #FFF4E6 100%); }
+    .deel2-blok .inner { display: grid; gap: 30px; align-items: center; }
+    @media (min-width: 760px) { .deel2-blok .inner { grid-template-columns: .8fr 1.2fr; gap: 44px; } }
+    .deel2-blok .cover { width: min(300px, 78%); transform: rotate(-2deg); }
+    .deel2-blok h2 { text-align: left; }
+    .deel2-blok .banner { margin-bottom: 10px; }
+    .deel2-blok p { margin-bottom: 14px; max-width: 34em; }
+    .aanmeld { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .aanmeld input[type=email] { flex: 1 1 230px; font: inherit; padding: 13px 18px; border: 2px solid var(--navy); border-radius: 999px; background: #fff; color: var(--inkt); }
+    .aanmeld button { font-family: 'Fredoka', 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 600; background: var(--navy); color: #fff; border: 0; border-radius: 999px; padding: 13px 26px; cursor: pointer; }
+    .aanmeld button:hover { background: var(--navy-donker); }
+    .aanmeld button:disabled { opacity: .6; cursor: default; }
+    .aanmeld .vangnet { position: absolute; left: -9999px; }   /* onzichtbaar veld tegen spamrobots */
+    .aanmeld-klein { font-size: .88rem; color: var(--grijs); margin-top: 10px; }
+    .aanmeld-uitkomst { font-weight: 800; margin-top: 12px; min-height: 1.6em; }
+    .aanmeld-uitkomst.goed { color: var(--groen-donker); }
+    .aanmeld-uitkomst.fout { color: var(--rood); }
+    .koop .deel2 a { color: inherit; }
+
     footer { text-align: center; padding: 28px 20px; color: #777; font-size: .9rem; background: #fff; }
     footer img { height: 44px; margin: 0 auto 10px; }
     footer a { color: inherit; }
@@ -146,6 +170,9 @@
   -->
 </head>
 <body>
+
+  <!-- ===== Meldingsbalk: deel 2 komt eraan ===== -->
+  <a class="melding" href="#deel2">Binnenkort: deel 2, De Dierentuin! <span>Krijg een seintje</span></a>
 
   <!-- ===== Topbalk: logo ===== -->
   <div class="top">
@@ -172,6 +199,26 @@
       <img class="cover foto" src="img/lifestyle.jpg" alt="Sudohint deel 1, De Boerderij, op tafel met een kop koffie">
     </div>
   </header>
+
+  <!-- ===== Binnenkort: deel 2 + aanmelden voor een seintje ===== -->
+  <section class="deel2-blok" id="deel2">
+    <div class="inner">
+      <img class="cover" src="img/cover-deel2.jpg" alt="Voorkant van Sudohint deel 2, De Dierentuin">
+      <div>
+        <div class="banner">Binnenkort · Deel 2</div>
+        <h2>De Dierentuin komt eraan!</h2>
+        <p>De verzorger is zijn plattegrond kwijt en niemand weet meer waar de dieren horen. In deel 2 help je de tijger, de panda en de giraf terug naar hun plek, in 40 nieuwe puzzels van makkelijk tot zeer moeilijk.</p>
+        <p><strong>Wil je weten wanneer je deel 2 kunt bestellen?</strong> Laat je e-mailadres achter, dan krijg je een bericht zodra het zover is.</p>
+        <form class="aanmeld" id="aanmeld-deel2" novalidate>
+          <input type="email" name="email" placeholder="jouw@email.nl" autocomplete="email" aria-label="Je e-mailadres" required>
+          <input class="vangnet" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit">Houd me op de hoogte</button>
+        </form>
+        <p class="aanmeld-uitkomst" id="aanmeld-uitkomst" role="status"></p>
+        <p class="aanmeld-klein">We gebruiken je e-mailadres alleen voor dit ene bericht over deel 2.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== Populair op bol ===== -->
   <section class="populair">
@@ -244,7 +291,7 @@
     <div class="inner">
       <h2>Nooit vastzitten</h2>
       <p class="intro">Kom je er even niet uit? Achterin staat elke puzzel stap voor stap uitgelegd, zodat je altijd verder kunt.</p>
-      <img class="kaartfoto" src="img/nooit-vastzitten.jpg" alt="Oplossingen die stap voor stap uitleggen hoe je eruit komt" style="max-width:760px;margin:0 auto;">
+      <img class="kaartfoto" src="img/nooit-vastzitten.jpg" alt="Oplossingen die stap voor stap uitleggen hoe je eruit komt" style="width:100%;max-width:760px;margin:0 auto;">
     </div>
   </section>
 
@@ -254,7 +301,7 @@
     <p class="intro">Sudohint deel 1, De Boerderij, is verkrijgbaar op bol. Vandaag besteld, morgen in huis.</p>
     <a class="btn-bol bol-link" data-knop="eind" href="https://www.bol.com/nl/nl/p/sudohint-puzzelboek-de-boerderij-40-logische-puzzels-met-dieren-en-hints-nederlands-voor-volwassenen-en-kinderen/9300000335585086/" target="_blank" rel="noopener">Bestel op bol.com&nbsp;→</a>
     <p class="prijs">€ 13,95 · 2 voor € 25,00</p>
-    <p class="deel2">Dit is deel 1 van de Sudohint-serie. Welke dieren help jij in deel 2?</p>
+    <p class="deel2">Dit is deel 1 van de Sudohint-serie. Deel 2, De Dierentuin, komt eraan: <a href="#deel2">krijg een seintje</a>.</p>
   </section>
 
   <footer>
@@ -309,6 +356,43 @@
     }
 
     stuur("view");
+
+    // ── Aanmelden voor het bericht over deel 2 ──
+    // Stuurt het e-mailadres naar het dashboard. text/plain = geen preflight,
+    // net als de beacon hierboven. Het onzichtbare veld "website" blijft bij
+    // echte bezoekers leeg; robots vullen het in en worden zo overgeslagen.
+    const AANMELD_URL = "https://zealous-stingray-306.eu-west-1.convex.site/api/site-signup";
+    const formulier = document.getElementById("aanmeld-deel2");
+    const uitkomst = document.getElementById("aanmeld-uitkomst");
+    function meld(tekst, soort) {
+      uitkomst.textContent = tekst;
+      uitkomst.className = "aanmeld-uitkomst " + soort;
+    }
+    formulier.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = formulier.email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        meld("Vul een geldig e-mailadres in.", "fout");
+        return;
+      }
+      if (formulier.website.value) { meld("Gelukt! Je krijgt een bericht zodra deel 2 te bestellen is.", "goed"); return; }
+      const knop = formulier.querySelector("button");
+      knop.disabled = true;
+      try {
+        const antwoord = await fetch(AANMELD_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ email, lijst: "deel2", session: sessie || undefined, source: bron() }),
+        });
+        if (!antwoord.ok) throw new Error("status " + antwoord.status);
+        formulier.reset();
+        meld("Gelukt! Je krijgt een bericht zodra deel 2 te bestellen is.", "goed");
+      } catch (fout) {
+        meld("Dat lukte niet. Probeer het later nog eens of mail naar info@sudohint.nl.", "fout");
+      } finally {
+        knop.disabled = false;
+      }
+    });
 
     // ── ChatGPT-meetpixel: page_viewed bij laden (doet de pixel niet vanzelf),
     //    custom event "bol_clicks" bij elke bol-knop = de conversie waar ChatGPT op richt.
